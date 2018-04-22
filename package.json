@@ -5,5 +5,20 @@
   "main": "index.js",
   "author": "Tiago Azevedo <tiago@fmap.tech>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "format": "prettier",
+    "deploy": "serverless deploy"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "prettier": "^1.12.1",
+    "serverless": "^1.26.1",
+    "serverless-offline": "^3.20.3",
+    "serverless-webpack": "^5.1.1",
+    "webpack": "^4.6.0",
+    "webpack-node-externals": "^1.7.2"
+  }
 }
