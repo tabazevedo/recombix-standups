@@ -1,0 +1,9 @@
+{
+  "name": "recombix-standups",
+  "version": "1.0.0",
+  "description": "Serverless standup bot",
+  "main": "index.js",
+  "author": "Tiago Azevedo <tiago@fmap.tech>",
+  "license": "MIT",
+  "private": true
+}
