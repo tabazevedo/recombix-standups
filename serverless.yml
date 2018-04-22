@@ -79,6 +79,13 @@ functions:
       - http:
           path: standups/start
           method: get
+  post_standups:
+    handler: handlers/main.post_standups
+    events:
+      - http:
+          path: standups
+          method: post
+          cors: true
   add_user:
     handler: handlers/main.add_user
     events:

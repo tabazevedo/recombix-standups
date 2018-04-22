@@ -22,7 +22,7 @@ export async function standupStart(users = []) {
         attachments: [
           {
             text: config.get('standup:message'),
-            callback_id: 'standup_form_open',
+            callback_id: config.get('callback:open_dialog'),
             color: '#3AE3A3',
             attachment_type: 'default',
             actions: [
