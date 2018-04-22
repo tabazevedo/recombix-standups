@@ -1,4 +1,11 @@
+import { addSubmission } from './db';
+
 export default function submitDialog(data) {
-  console.log('dialog submitted!', data);
-  return true;
+  const submission = {
+    yesterday: data.submission.yesterday,
+    today: data.submission.today,
+    help: data.submission.help
+  };
+
+  addSubmission(data.user.id, submission);
 }

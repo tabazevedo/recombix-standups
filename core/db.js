@@ -1,6 +1,7 @@
 import dynamodb from 'serverless-dynamodb-client';
 import slack from 'slack';
 import config from './config';
+import { format } from 'date-fns';
 
 const client = dynamodb.doc;
 
@@ -29,4 +30,19 @@ export async function addUser(email) {
   }
 
   throw new Error(`Could not fetch user with email: ${email}`);
+}
+
+export async function addSubmission(userId, submission) {
+  const date = format(new Date(), 'yyyy-mm-dddd');
+
+  return await client
+    .put({
+      TableName: 'submissions',
+      Item: {
+        userId: userId,
+        date: date,
+        submission: submission
+      }
+    })
+    .promise();
 }
