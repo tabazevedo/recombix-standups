@@ -1,12 +1,6 @@
 import config from './config';
 import slack from 'slack';
 
-export function receiveMessage(user, message, done) {
-  // check which question the user is answering
-  // store this in the database
-  // reply accordingly with next question in the flow
-}
-
 export async function standupStart(users = []) {
   return await Promise.all(
     users.map(async user => {

@@ -77,15 +77,11 @@ functions:
   start_standup:
     handler: handlers/main.start_standup
     events:
-      - http:
-          path: standups/start
-          method: get
+      - schedule: cron(30 9 ? * MON-FRI)
   standup_reminder:
     handler: handlers/main.standup_reminder
     events:
-      - http:
-          path: standups/reminder
-          method: get
+      - schedule: cron(50 9 ? * MON-FRI)
   post_standups:
     handler: handlers/main.post_standups
     events:
