@@ -7,5 +7,5 @@ export default function submitDialog(data) {
     help: data.submission.help
   };
 
-  addSubmission(data.user.id, submission);
+  return addSubmission(data.user.id, submission);
 }
