@@ -77,11 +77,15 @@ functions:
   start_standup:
     handler: handlers/main.start_standup
     events:
-      - schedule: cron(30 9 ? * MON-FRI)
+      - schedule: cron(30 9 ? * MON-FRI *)
   standup_reminder:
     handler: handlers/main.standup_reminder
     events:
-      - schedule: cron(50 9 ? * MON-FRI)
+      - schedule: cron(50 9 ? * MON-FRI *)
+  standup_end:
+    handler: handlers/main.standup_end
+    events:
+      - schedule: cron(0 10 ? * MON-FRI *)
   post_standups:
     handler: handlers/main.post_standups
     events:

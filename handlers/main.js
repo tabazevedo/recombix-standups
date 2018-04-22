@@ -6,6 +6,7 @@ import config from '../core/config';
 import openDialog from '../core/open-dialog';
 import submitDialog from '../core/submit-dialog';
 import standupReminder from '../core/standup-reminder';
+import standupEnd from '../core/standup-end';
 
 export async function start_standup(event, context) {
   let users;
@@ -20,6 +21,19 @@ export async function start_standup(event, context) {
     await standupStart(users);
   } catch (e) {
     return error(e, 'Could not start standup process.');
+  }
+
+  return {
+    statusCode: 200
+  };
+}
+
+export async function standup_end(event, context) {
+  try {
+    const submissions = await db.getSubmissions(new Date());
+    await standupEnd(submissions);
+  } catch (e) {
+    return error(e, 'Could not end standup process.');
   }
 
   return {

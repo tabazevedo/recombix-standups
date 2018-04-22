@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "format": "prettier",
+    "format": "prettier ./core/**/*.js ./handlers/**/*.js --write",
     "deploy": "serverless deploy"
   },
   "dependencies": {
