@@ -8,40 +8,36 @@ export function receiveMessage(user, message, done) {
 }
 
 export async function standupStart(users = []) {
-  try {
-    await Promise.all(
-      users.map(async user => {
-        conversation = await slack.conversations.open({
-          token: config.get('slack:token'),
-          users: [user]
-        });
+  return await Promise.all(
+    users.map(async user => {
+      const conversation = await slack.conversations.open({
+        token: config.get('slack:token'),
+        users: user.id
+      });
 
-        const post = await slack.chat.postMessage({
-          token: config.get('slack:token'),
-          channel: conversation.channel.id,
-          attachments: [
-            {
-              text: config.get('standup:message').replace('{{user}}', user),
-              callback_id: 'standup_form_open',
-              color: '#3AE3A3',
-              attachment_type: 'default',
-              actions: [
-                {
-                  name: 'ok',
-                  text: 'Give my update',
-                  type: 'button',
-                  style: 'primary'
-                }
-              ]
-            }
-          ]
-        });
-      })
-    );
-  } catch (e) {
-    console.log(e);
-    throw new Error('Could not start standups: ', e);
-  }
+      const post = await slack.chat.postMessage({
+        text: '',
+        token: config.get('slack:token'),
+        channel: conversation.channel.id,
+        attachments: [
+          {
+            text: config.get('standup:message'),
+            callback_id: 'standup_form_open',
+            color: '#3AE3A3',
+            attachment_type: 'default',
+            actions: [
+              {
+                name: 'ok',
+                text: 'Give my update',
+                type: 'button',
+                style: 'primary'
+              }
+            ]
+          }
+        ]
+      });
+    })
+  );
 }
 
 export function standupReminder(users) {

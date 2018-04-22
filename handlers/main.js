@@ -1,30 +1,40 @@
 import * as db from '../core/db';
 import { standupStart } from '../core/internals';
+import error from '../core/error';
 
-export async function start_standup(event, context, callback) {
+export async function start_standup(event, context) {
   let users;
 
   try {
     users = await db.getUsers();
   } catch (e) {
-    return callback(e);
+    return error(e, 'Failed to get users from database.');
   }
 
   try {
     await standupStart(users);
   } catch (e) {
-    return callback(e);
+    return error(e, 'Could not start standup process.');
   }
 
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Standups successfully started'
-    })
+  return {
+    statusCode: 200
   };
+}
 
-  callback(null, response);
+// triggered by a slash command eventually?
+export async function add_user(event, context) {
+  const body = JSON.parse(event.body);
+  const email = body.email;
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+  try {
+    await db.addUser(email);
+  } catch (e) {
+    return error(e, `Could not add user ${email}`);
+  }
+
+  return {
+    statusCode: 201,
+    body: `Added user with email ${email} to standup members.`
+  };
 }
