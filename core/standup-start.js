@@ -1,7 +1,7 @@
 import config from './config';
 import slack from 'slack';
 
-export async function standupStart(users = []) {
+export default async function standupStart(users = []) {
   return await Promise.all(
     users.map(async user => {
       const conversation = await slack.conversations.open({
@@ -32,8 +32,4 @@ export async function standupStart(users = []) {
       });
     })
   );
-}
-
-export function standupEnd(users) {
-  // end the standup, looking at all users' state for today and post the results to a channel
 }

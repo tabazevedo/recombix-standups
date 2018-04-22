@@ -1,10 +1,10 @@
 import qs from 'querystring';
 import * as db from '../core/db';
-import { standupStart } from '../core/internals';
 import error from '../core/error';
 import config from '../core/config';
 import openDialog from '../core/open-dialog';
 import submitDialog from '../core/submit-dialog';
+import standupStart from '../core/standup-start';
 import standupReminder from '../core/standup-reminder';
 import standupEnd from '../core/standup-end';
 
