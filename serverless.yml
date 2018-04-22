@@ -20,12 +20,21 @@ service: recombix-standups
 provider:
   name: aws
   runtime: nodejs8.10
+  region: eu-west-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:eu-west-2:*:*"
 
 # Plugins
 
 plugins:
-  - serverless-offline
   - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-offline
 
 # you can overwrite defaults here
 #  stage: dev
@@ -61,8 +70,12 @@ plugins:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handlers/main.hello
+  start_standup:
+    handler: handlers/main.start_standup
+    events:
+      - http:
+          path: standups/start
+          method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -97,14 +110,24 @@ functions:
 #    environment:
 #      variable2: value2
 
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+custom:
+  dynamodb:
+    start:
+      migrate: true
+  webpackIncludeModules: true
+
+resources: # CloudFormation templates, we only need a DB for this app
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: usersTable
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

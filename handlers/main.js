@@ -1,9 +1,25 @@
-export function hello(event, context, callback) {
+import * as db from '../core/db';
+import { standupStart } from '../core/internals';
+
+export async function start_standup(event, context, callback) {
+  let users;
+
+  try {
+    users = await db.getUsers();
+  } catch (e) {
+    return callback(e);
+  }
+
+  try {
+    await standupStart(users);
+  } catch (e) {
+    return callback(e);
+  }
+
   const response = {
     statusCode: 200,
     body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event
+      message: 'Standups successfully started'
     })
   };
 

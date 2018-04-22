@@ -25,7 +25,8 @@ module.exports = {
           {
             loader: 'babel-loader'
           }
-        ]
+        ],
+        include: __dirname
       }
     ]
   },
