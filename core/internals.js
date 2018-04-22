@@ -40,10 +40,6 @@ export async function standupStart(users = []) {
   );
 }
 
-export function standupReminder(users) {
-  // message users with a standup reminder
-}
-
 export function standupEnd(users) {
   // end the standup, looking at all users' state for today and post the results to a channel
 }

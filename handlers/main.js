@@ -5,6 +5,7 @@ import error from '../core/error';
 import config from '../core/config';
 import openDialog from '../core/open-dialog';
 import submitDialog from '../core/submit-dialog';
+import standupReminder from '../core/standup-reminder';
 
 export async function start_standup(event, context) {
   let users;
@@ -19,6 +20,19 @@ export async function start_standup(event, context) {
     await standupStart(users);
   } catch (e) {
     return error(e, 'Could not start standup process.');
+  }
+
+  return {
+    statusCode: 200
+  };
+}
+
+export async function standup_reminder(event, context) {
+  try {
+    const users = await db.getUsersWithMissingSubmissionsToday();
+    await standupReminder(users);
+  } catch (e) {
+    return error(e, 'Failed to run a standup reminder.');
   }
 
   return {

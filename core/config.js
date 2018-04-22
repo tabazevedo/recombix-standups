@@ -5,6 +5,11 @@ config.set(
   "Hey! It's almost standup time. Please fill in the form!"
 );
 
+config.set(
+  'standup:reminder',
+  "Hey! Just reminding you to give your team a standup update. It's almost time!"
+);
+
 config.set('slack:token', process.env.SLACK_OAUTH_TOKEN);
 config.set('callback:open_dialog', 'callback:open_dialog');
 config.set('callback:submit_dialog', 'callback:submit_dialog');

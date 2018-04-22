@@ -27,10 +27,11 @@ provider:
         - dynamodb:Scan
         - dynamodb:GetItem
         - dynamodb:PutItem
+        - dynamodb:Query
       Resource: "arn:aws:dynamodb:eu-west-2:*:*"
   environment:
-    # oauth token for the standups app
-    SLACK_OAUTH_TOKEN: 'xoxp-350521928001-350837778900-351240202773-5bf9ba51b1667311957cfb24a308d96f'
+    # oauth token for the standups bot
+    SLACK_OAUTH_TOKEN: 'xoxb-351241933445-Utn7GcUAUpuIkCwgELUZzUmw'
 
 # Plugins
 
@@ -78,6 +79,12 @@ functions:
     events:
       - http:
           path: standups/start
+          method: get
+  standup_reminder:
+    handler: handlers/main.standup_reminder
+    events:
+      - http:
+          path: standups/reminder
           method: get
   post_standups:
     handler: handlers/main.post_standups
@@ -150,8 +157,8 @@ resources: # CloudFormation templates, we only need a DB for this app
           - AttributeName: email
             KeyType: RANGE
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
     submissionsTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -167,5 +174,5 @@ resources: # CloudFormation templates, we only need a DB for this app
           - AttributeName: userId
             KeyType: RANGE
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
