@@ -28,27 +28,27 @@ plugins:
 # Functions
 
 functions:
-  start_standup: # Begin the standup flow at 9:30am
-    handler: handlers/main.start_standup
+  standup_start: # Begin the standup flow at 9:30am
+    handler: handlers/standup.start
     events:
       - schedule: cron(30 9 ? * MON-FRI *)
   standup_reminder: # Standup reminder at 9:50am
-    handler: handlers/main.standup_reminder
+    handler: handlers/standup.reminder
     events:
       - schedule: cron(50 9 ? * MON-FRI *)
   standup_end: # Standup ends at 10:00 and posts messages
-    handler: handlers/main.standup_end
+    handler: handlers/standup.end
     events:
       - schedule: cron(0 10 ? * MON-FRI *)
-  post_standups: # This handles slack webhooks
-    handler: handlers/main.post_standups
+  slack_post: # This handles slack webhooks
+    handler: handlers/slack.post
     events:
       - http:
           path: standups
           method: post
           cors: true
   add_user: # Currently we manually post here to add a user.
-    handler: handlers/main.add_user
+    handler: handlers/dev.add_user
     events:
       - http:
           path: users
