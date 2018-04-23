@@ -18,8 +18,8 @@
 # deploying
 
 * Make sure you have AWS credentials set up correctly in `~/.aws/credentials` (or provide via env variables)
-* Replace the `SLACK_OAUTH_TOKEN` in serverless.yml with the OAuth token for the app bot you created earlier
-* Run `yarn deploy`
+* Grab your _Bot User OAuth Access Token_ as you'll need it for the next step.
+* Run `SLACK_OAUTH_TOKEN="bot-oauth-token" yarn deploy`
 
 #### Keep a note of the POST /standups endpoint from the output of yarn deploy, as you'll need it in the next step
 

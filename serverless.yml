@@ -16,7 +16,7 @@ provider:
       Resource: "arn:aws:dynamodb:eu-west-2:*:*"
   environment:
     # oauth token for the standups bot
-    SLACK_OAUTH_TOKEN: 'xoxb-351241933445-Utn7GcUAUpuIkCwgELUZzUmw'
+    SLACK_OAUTH_TOKEN: ${env:SLACK_OAUTH_TOKEN}
 
 # Plugins
 
